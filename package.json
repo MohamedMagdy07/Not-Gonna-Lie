@@ -1,0 +1,13 @@
+{
+  "name": "not-gonna-lie",
+  "version": "1.0.0",
+  "description": "Feel free to say whatever you want, Just don't be rude.",
+  "license": "ISC",
+  "author": "Mohamed Magdy",
+  "type": "commonjs",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "node --watch .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
