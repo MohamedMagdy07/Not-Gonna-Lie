@@ -4,7 +4,7 @@
   "description": "Feel free to say whatever you want, Just don't be rude.",
   "license": "ISC",
   "author": "Mohamed Magdy",
-  "type": "commonjs",
+  "type": "module",
   "main": "src/main.js",
   "scripts": {
     "dev": "node --watch .",
