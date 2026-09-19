@@ -1,23 +1,26 @@
-import {Schema,model} from "mongoose";
+import {Schema, model} from "mongoose";
 
 
-const OtpSchema = new Schema({
-    code:{
-        type:String,
-        required:true,
-        length:6
+const otpSchema = new Schema({
+    code: {
+        type: String,
+        required: true,
+        length:6,
     },
-    email:{
-        type:String,
-        required:true,
-        lowercase:true,
-        trim:true
+    email: {
+        type: String,
+        required: true,
+        lowercase: true,
+        trim: true
     },
-    expireAt:{
-        type:Date,
-    }
-},{
+}, {
     timestamps: {
         createdAt: true,
+        updatedAt: false,
     }
-})
+});
+
+otpSchema.index({createdAt: 1}, {expireAfterSeconds: 300});
+
+
+export const OTP = model("OTP", otpSchema);

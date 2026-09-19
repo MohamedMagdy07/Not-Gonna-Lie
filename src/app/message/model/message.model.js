@@ -1,7 +1,7 @@
-import {Schema, model} from "mongoose";
+import {Schema,model} from "mongoose";
 
 
-const MessageSchema = new Schema({
+const messageSchema = new Schema({
         content: {
             type: String,
             required: true,
@@ -28,4 +28,4 @@ const MessageSchema = new Schema({
     })
 
 
-export const Message = model("Message", MessageSchema);
+export const Message = model("Message", messageSchema);

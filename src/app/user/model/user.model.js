@@ -1,6 +1,6 @@
 import {Schema,model} from 'mongoose';
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
         name: {
             type: String,
             required: true,
@@ -17,10 +17,8 @@ const UserSchema = new Schema({
         },
         password: {
             type: String,
-            required: () => {
-                if (!this.provider === 'local') {
-                    return true
-                }
+            required: function ()  {
+                return this.provider === 'local';
             },
 
         },
@@ -42,12 +40,12 @@ const UserSchema = new Schema({
         },
         provider:{
             type: String,
-            enum: ['local','google','facebook'],
             default: 'local',
+            enum: ['local','google','facebook'],
         }
     },
     {
         timestamps: true
     })
 
-export const User = model('User', UserSchema);
+export const User = model('User', userSchema);
