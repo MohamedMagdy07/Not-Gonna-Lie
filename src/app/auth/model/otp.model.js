@@ -1,4 +1,4 @@
-import {Schema, model} from "mongoose";
+import mongoose, {Schema, model} from "mongoose";
 
 
 const otpSchema = new Schema({
@@ -21,6 +21,14 @@ const otpSchema = new Schema({
 });
 
 otpSchema.index({createdAt: 1}, {expireAfterSeconds: 300});
+otpSchema.pre('save',async function(){
+    try{
+        await mongoose.model('OTP').deleteMany({email: this.email});
+    }catch(err){
+        throw err;
+    }
+})
 
 
 export const OTP = model("OTP", otpSchema);
+

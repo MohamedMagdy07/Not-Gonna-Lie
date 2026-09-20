@@ -12,3 +12,18 @@ export async function register(req, res, next) {
         next(err)
     }
 }
+
+
+export async function verify(req, res, next) {
+    try{
+        const {code,email} = req.body
+        const verifiedUser = await authService.verify(code,email)
+        res.status(201).json({
+            message: 'User verified successfully',
+            success: true,
+            user: verifiedUser,
+        })
+    }catch(err){
+        next(err)
+    }
+}
