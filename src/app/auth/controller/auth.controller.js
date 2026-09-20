@@ -27,3 +27,19 @@ export async function verify(req, res, next) {
         next(err)
     }
 }
+
+export async function login(req, res, next) {
+    try{
+        const {password,email} = req.body
+        const token = await authService.login(email,password)
+        res.cookie('token', token, {
+            httpOnly: true,
+        })
+        res.status(200).json({
+            message: 'User logged successfully',
+            success: true,
+        })
+    }catch(err){
+        next(err)
+    }
+}
