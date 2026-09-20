@@ -49,3 +49,15 @@ export async function login(email, password) {
     }, process.env.JWT_SECRET_KEY, {expiresIn: '12H'});
     return token;
 }
+
+
+export async function sendOtp(email) {
+    const userExist = await authRepo.checkEmailExists(email);
+    if (!userExist) throw userNotExists;
+    const otp = generateOTP();
+    await otpRepo.createOtp({
+        code: otp,
+        email,
+    })
+    console.log(otp); // This will be enough for testing
+}

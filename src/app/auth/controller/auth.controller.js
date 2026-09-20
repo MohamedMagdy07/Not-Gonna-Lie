@@ -43,3 +43,15 @@ export async function login(req, res, next) {
         next(err)
     }
 }
+export async function sendOtp(req, res, next) {
+    try{
+        const {email} = req.body
+        await authService.sendOtp(email)
+        res.status(201).json({
+            message: 'New Otp generated successfully',
+            success: true,
+        })
+    }catch(err){
+        next(err)
+    }
+}
