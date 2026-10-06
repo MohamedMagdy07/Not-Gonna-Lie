@@ -1,17 +1,17 @@
 import 'dotenv/config';
 import * as authRepo from "../repository/auth.repository.js"
 import * as otpRepo from "../repository/otp.repository.js"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
 import {generateOTP} from "../../../common/utils/OtpGenerator.js"
 import {invalidOtp, noOtp, wrongPassword} from "../error.js"
 import {userExists, userNotExists, userNotVerified, userVerified} from "../../user/error.js";
+import {comparePassword, hashPassword} from "../utils/password.hashing.js";
+import {getToken} from "../utils/token.js";
 
 
 export async function register(userData) {
     const userExist = await authRepo.checkEmailExists(userData.email);
     if (userExist) throw userExists;
-    userData.password = await bcrypt.hash(userData.password, 10);
+    userData.password = await hashPassword(userData.password)
     const newUser = await authRepo.createUser(userData);
     const otp = generateOTP();
     await otpRepo.createOtp({
@@ -41,12 +41,9 @@ export async function login(email, password) {
     const user = await authRepo.checkEmailExists(email);
     if (!user) throw userNotExists;
     if (!user.isVerified) throw userNotVerified
-    const match = await bcrypt.compare(password, user.password)
+    const match = await comparePassword(password, user.password)
     if (!match) throw wrongPassword;
-    const token =  jwt.sign({
-        email,
-        password,
-    }, process.env.JWT_SECRET_KEY, {expiresIn: '12H'});
+    const token = getToken({email, password},"12H");
     return token;
 }
 

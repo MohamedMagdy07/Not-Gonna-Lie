@@ -5,7 +5,7 @@
   "license": "ISC",
   "author": "Mohamed Magdy",
   "type": "module",
-  "main": "src/main.js",
+  "main": "src/app.js",
   "scripts": {
     "dev": "node --watch .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.6.0",
     "mongoose": "^9.10.1",
-    "nodemailer": "^10.0.10"
+    "nodemailer": "^10.0.10",
+    "pino": "^10.4.0",
+    "pino-pretty": "^13.2.0"
   }
 }

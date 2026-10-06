@@ -1,6 +1,7 @@
+import {AppError} from "../../common/error/error.js";
 
 
-export const wrongPassword = new Error ("invalid credentials  ");
-export const noOtp = new Error ("Otp expired");
-export const invalidOtp = new Error ("Wrong Otp number");
+export const wrongPassword = new AppError ("invalid credentials ",401);
+export const noOtp = new AppError ("Otp expired",404);
+export const invalidOtp = new AppError ("Wrong Otp number",406);
 
