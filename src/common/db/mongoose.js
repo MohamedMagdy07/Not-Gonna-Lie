@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import mongoose from 'mongoose'
+import logger from "../logger/logger.js";
 
  mongoose.connect(process.env.MONGODB_URI).then(() => {
-    console.log("Database connected successfully")}).catch((err) => {
-    console.log("Could not connect to the database: ", err);});
+    logger.info("Database connected successfully")}).catch((err) => {
+    logger.error(`Could not connect to the database: ${err}`);
+    });

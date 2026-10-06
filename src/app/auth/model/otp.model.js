@@ -1,4 +1,5 @@
 import mongoose, {Schema, model} from "mongoose";
+import logger from "../../../common/logger/logger.js";
 
 
 const otpSchema = new Schema({

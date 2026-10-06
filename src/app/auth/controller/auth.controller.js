@@ -55,3 +55,14 @@ export async function sendOtp(req, res, next) {
         next(err)
     }
 }
+
+
+export async function resetPassword(req, res, next) {
+    try {
+        const {email,code,password} = req.body
+        await authService.resetPassword(email,code,password);
+        res.status(204).json();
+    }catch(err){
+        next(err)
+    }
+}

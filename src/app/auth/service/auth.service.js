@@ -6,6 +6,9 @@ import {invalidOtp, noOtp, wrongPassword} from "../error.js"
 import {userExists, userNotExists, userNotVerified, userVerified} from "../../user/error.js";
 import {comparePassword, hashPassword} from "../utils/password.hashing.js";
 import {getToken} from "../utils/token.js";
+import {verifyOtp} from "../utils/otp.js";
+import * as userRepo from "../../user/repository/user.repository.js";
+import logger from "../../../common/logger/logger.js";
 
 
 export async function register(userData) {
@@ -28,9 +31,10 @@ export async function verify(code, email) {
     const userExist = await authRepo.checkEmailExists(email);
     if (!userExist) throw userNotExists;
     if (userExist.isVerified) throw userVerified
-    const otp = await otpRepo.getOtpByEmail(email);
-    if (!otp) throw noOtp;
-    if (code !== otp.code) throw invalidOtp
+    // const otp = await otpRepo.getOtpByEmail(email);
+    // if (!otp) throw noOtp;
+    // if (code !== otp.code) throw invalidOtp
+    await verifyOtp(code,email);
     const verifiedUser = await authRepo.verifyUser(email);
     await otpRepo.deleteOtp(email)
     return verifiedUser;
@@ -56,5 +60,14 @@ export async function sendOtp(email) {
         code: otp,
         email,
     })
-    console.log(otp); // This will be enough for testing
+    logger.info(otp); // This will be enough for testing
+}
+
+export async function resetPassword(email,code,newPassword) {
+    const userExist = await authRepo.checkEmailExists(email);
+    if (!userExist) throw userNotExists;
+    await verifyOtp(code,email);
+    const hashedPassword = await hashPassword(newPassword);
+    await userRepo.updateUserByEmail(email,{password:hashedPassword});
+    await otpRepo.deleteOtp(email)
 }
