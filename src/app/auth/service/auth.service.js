@@ -5,10 +5,11 @@ import {generateOTP} from "../../../common/utils/OtpGenerator.js"
 import {wrongPassword} from "../error.js"
 import {userExists, userNotExists, userNotVerified, userVerified} from "../../user/error.js";
 import {comparePassword, hashPassword} from "../utils/password.hashing.js";
-import {getToken} from "../utils/token.js";
+import {generateToken} from "../utils/token.js";
 import {verifyOtp} from "../utils/otp.js";
 import * as userRepo from "../../user/repository/user.repository.js";
 import logger from "../../../common/logger/logger.js";
+import {verifyGoogleToken} from "../../../common/utils/google.auth.js";
 
 
 export async function register(userData) {
@@ -34,7 +35,7 @@ export async function verify(code, email) {
     // const otp = await otpRepo.getOtpByEmail(email);
     // if (!otp) throw noOtp;
     // if (code !== otp.code) throw invalidOtp
-    await verifyOtp(code,email);
+    await verifyOtp(code, email);
     const verifiedUser = await authRepo.verifyUser(email);
     await otpRepo.deleteOtp(email)
     return verifiedUser;
@@ -47,8 +48,7 @@ export async function login(email, password) {
     if (!user.isVerified) throw userNotVerified
     const match = await comparePassword(password, user.password)
     if (!match) throw wrongPassword;
-    const token = getToken({email, password},"12H");
-    return token;
+    return generateToken({email, password}, "12H");
 }
 
 
@@ -63,11 +63,34 @@ export async function sendOtp(email) {
     logger.info(otp); // This will be enough for testing
 }
 
-export async function resetPassword(email,code,newPassword) {
+export async function resetPassword(email, code, newPassword) {
     const userExist = await authRepo.checkEmailExists(email);
     if (!userExist) throw userNotExists;
-    await verifyOtp(code,email);
+    await verifyOtp(code, email);
     const hashedPassword = await hashPassword(newPassword);
-    await userRepo.updateUserByEmail(email,{password:hashedPassword});
+    await userRepo.updateUserByEmail(email, {password: hashedPassword});
     await otpRepo.deleteOtp(email)
+}
+
+
+export async function loginWithGoogle(gToken) {
+    const payLoad = await verifyGoogleToken(gToken);
+    const user = await authRepo.checkEmailExists(payLoad.email);
+    if (user) {
+        return generateToken({
+            _id: user.id,
+            email: user.email,
+        }, "1H");
+    }
+    const createdUser = await authRepo.createUser({
+        name: payLoad.name,
+        email: payLoad.email,
+        provider: "google",
+        isVerified: true
+    })
+
+    return generateToken({
+        id: createdUser._id,
+        email: createdUser.email
+    }, "1H")
 }

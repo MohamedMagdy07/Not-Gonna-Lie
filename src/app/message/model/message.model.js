@@ -1,4 +1,4 @@
-import {Schema,model} from "mongoose";
+import {model, Schema} from "mongoose";
 
 
 const messageSchema = new Schema({
@@ -25,7 +25,7 @@ const messageSchema = new Schema({
     },
     {
         timestamps: true,
-        strict:true
+        strict: true
     })
 
 

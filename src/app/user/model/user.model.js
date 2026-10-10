@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import {Schema,model} from 'mongoose';
+import {model, Schema} from 'mongoose';
 
 const userSchema = new Schema({
         name: {
@@ -18,7 +18,7 @@ const userSchema = new Schema({
         },
         password: {
             type: String,
-            required: function ()  {
+            required: function () {
                 return this.provider === 'local';
             },
 
@@ -39,7 +39,7 @@ const userSchema = new Schema({
             enum: ['male', 'female'],
             default: 'male',
         },
-        provider:{
+        provider: {
             type: String,
             default: 'local',
             enum: process.env.EMAIL_PROVIDERS.split(','),
@@ -47,7 +47,7 @@ const userSchema = new Schema({
     },
     {
         timestamps: true,
-        strict:true
+        strict: true
     })
 
 export const User = model('User', userSchema);

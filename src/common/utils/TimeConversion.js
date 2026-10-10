@@ -1,15 +1,15 @@
+export function convertToMs(value, unit) {
+    switch (unit.toLowerCase()) {
+        case 'hours':
+            return value * 60 * 60 * 1000;
 
-export function msToSeconds(ms){
-    return ms/1000;
-}
+        case 'minutes':
+            return value * 60 * 1000;
 
-export function msToMinutes(ms){
-    return msToSeconds(ms)*60;
-}
+        case 'seconds':
+            return value * 1000;
 
-export function secToMs(sec){
-    return sec*1000;
-}
-export function minutesToMs(minutes){
-    return secToMs(minutes)*60;
+        default:
+            throw new Error("Invalid unit. Please use 'hours', 'minutes', or 'seconds'.");
+    }
 }

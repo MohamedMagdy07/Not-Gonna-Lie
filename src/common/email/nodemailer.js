@@ -12,10 +12,10 @@ const transporter = nodemailer.createTransport({
 
 export async function sendEmail(to, subject, html) {
 
-     await transporter.sendMail({
-         from: `"Not Gonna Lie App" <${process.env.NODE_MAILER_EMAIL}>`,
-         to: to,
-         subject: subject,
-         html: html
-     })
+    await transporter.sendMail({
+        from: `"Not Gonna Lie App" <${process.env.NODE_MAILER_EMAIL}>`,
+        to: to,
+        subject: subject,
+        html: html
+    })
 }

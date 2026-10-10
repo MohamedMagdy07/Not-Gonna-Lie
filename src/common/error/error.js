@@ -1,9 +1,9 @@
 import logger from "../logger/logger.js";
 
-export async function globalErrorHandler (error, req, res, next){
+export async function globalErrorHandler(error, req, res, next) {
     logger.error(error);
 
-    if(error.isOperationError===true){
+    if (error.isOperationError === true) {
         return res.status(error.statusCode).json({
             message: error.message,
             success: false,
@@ -19,7 +19,8 @@ export async function globalErrorHandler (error, req, res, next){
 export class AppError extends Error {
     statusCode;
     isOperationError;
-    constructor(message,statusCode,isOperationError=true) {
+
+    constructor(message, statusCode, isOperationError = true) {
         super(message);
         this.statusCode = statusCode;
         this.isOperationError = isOperationError
