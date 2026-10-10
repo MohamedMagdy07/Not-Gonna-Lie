@@ -24,7 +24,8 @@ const messageSchema = new Schema({
         }
     },
     {
-        timestamps: true
+        timestamps: true,
+        strict:true
     })
 
 

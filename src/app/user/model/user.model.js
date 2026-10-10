@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {Schema,model} from 'mongoose';
 
 const userSchema = new Schema({
@@ -41,11 +42,12 @@ const userSchema = new Schema({
         provider:{
             type: String,
             default: 'local',
-            enum: ['local','google','facebook'],
+            enum: process.env.EMAIL_PROVIDERS.split(','),
         }
     },
     {
-        timestamps: true
+        timestamps: true,
+        strict:true
     })
 
 export const User = model('User', userSchema);

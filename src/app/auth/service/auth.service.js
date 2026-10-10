@@ -2,7 +2,7 @@ import 'dotenv/config';
 import * as authRepo from "../repository/auth.repository.js"
 import * as otpRepo from "../repository/otp.repository.js"
 import {generateOTP} from "../../../common/utils/OtpGenerator.js"
-import {invalidOtp, noOtp, wrongPassword} from "../error.js"
+import {wrongPassword} from "../error.js"
 import {userExists, userNotExists, userNotVerified, userVerified} from "../../user/error.js";
 import {comparePassword, hashPassword} from "../utils/password.hashing.js";
 import {getToken} from "../utils/token.js";
@@ -22,7 +22,7 @@ export async function register(userData) {
         email: userData.email,
     })
     //await sendEmail(userData.email, "Verify your email",`<h1>Your verification code is ${otp}<h1>`); // since the function is working, I will comment it and use Log to check the output
-    console.log(otp); // This will be enough for testing
+    logger.info(otp); // This will be enough for testing
     return newUser;
 }
 

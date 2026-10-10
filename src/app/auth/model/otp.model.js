@@ -18,7 +18,8 @@ const otpSchema = new Schema({
     timestamps: {
         createdAt: true,
         updatedAt: false,
-    }
+    },
+    strict:true
 });
 
 otpSchema.index({createdAt: 1}, {expireAfterSeconds: 300});
