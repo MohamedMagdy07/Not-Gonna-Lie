@@ -1,4 +1,4 @@
-import {AppError} from "../../common/error/error.js";
+import {AppError} from "../../pkg/error/error.js";
 
 
 export const wrongPassword = new AppError("invalid credentials ", 401);

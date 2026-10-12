@@ -1,15 +1,15 @@
 import 'dotenv/config';
 import * as authRepo from "../repository/auth.repository.js"
 import * as otpRepo from "../repository/otp.repository.js"
-import {generateOTP} from "../../../common/utils/OtpGenerator.js"
+import {generateOTP} from "../../../pkg/utils/OtpGenerator.js"
 import {wrongPassword} from "../error.js"
 import {userExists, userNotExists, userNotVerified, userVerified} from "../../user/error.js";
 import {comparePassword, hashPassword} from "../utils/password.hashing.js";
 import {generateToken} from "../utils/token.js";
 import {verifyOtp} from "../utils/otp.js";
 import * as userRepo from "../../user/repository/user.repository.js";
-import logger from "../../../common/logger/logger.js";
-import {verifyGoogleToken} from "../../../common/utils/google.auth.js";
+import logger from "../../../pkg/logger/logger.js";
+import {verifyGoogleToken} from "../../../lib/utils/google.auth.js";
 
 
 export async function register(userData) {

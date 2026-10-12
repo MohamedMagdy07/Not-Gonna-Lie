@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
-import './common/db/mongoose.js'
+import './lib/db/mongoose.js'
 import {authRouter} from "./app/auth/auth.route.js";
-import {globalErrorHandler} from "./common/error/error.js";
-import logger from "./common/logger/logger.js";
+import {globalErrorHandler} from "./pkg/error/error.js";
+import logger from "./pkg/logger/logger.js";
 
 const app = express();
 app.use(express.json());

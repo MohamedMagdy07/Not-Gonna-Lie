@@ -1,4 +1,4 @@
-import {AppError} from "../error/error.js";
+import {AppError} from "../../pkg/error/error.js";
 
 const {OAuth2Client} = require('google-auth-library');
 

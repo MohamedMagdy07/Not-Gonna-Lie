@@ -1,8 +1,8 @@
 import * as authService from "../service/auth.service.js"
-import {validationBody} from "../../../common/validation/validation.js";
+import {validationBody} from "../../../lib/validation/validation.js";
 import {loginDTO, registerDTO, resetPasswordDTO, sendOTPDTO, verifyAccountDTO} from "../dto/auth.dto.js";
-import logger from "../../../common/logger/logger.js";
-import {convertToMs} from "../../../common/utils/TimeConversion.js";
+import logger from "../../../pkg/logger/logger.js";
+import {convertToMs} from "../../../pkg/utils/TimeConversion.js";
 
 export async function register(req, res, next) {
     try {
