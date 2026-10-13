@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import * as authRepo from "../repository/auth.repository.js"
 import * as otpRepo from "../repository/otp.repository.js"
 import {generateOTP} from "../../../pkg/utils/OtpGenerator.js"

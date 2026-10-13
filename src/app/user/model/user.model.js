@@ -1,5 +1,5 @@
-import 'dotenv/config';
 import {model, Schema} from 'mongoose';
+import {env} from "../../../lib/config/env.js";
 
 const userSchema = new Schema({
         name: {
@@ -42,7 +42,7 @@ const userSchema = new Schema({
         provider: {
             type: String,
             default: 'local',
-            enum: process.env.EMAIL_PROVIDERS.split(','),
+            enum: env.providers.split(','),
         }
     },
     {

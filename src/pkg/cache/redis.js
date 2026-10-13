@@ -1,5 +1,4 @@
 import Redis from "ioredis";
-import logger from "../logger/logger.js";
 
 export class RedisCacheProvider {
     redis;

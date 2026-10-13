@@ -1,19 +1,19 @@
-import 'dotenv/config';
 import nodemailer from "nodemailer";
+import {env} from "../config/env.js";
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
     secure: false,
     auth: {
-        user: process.env.NODE_MAILER_EMAIL,
-        pass: process.env.NODE_MAILER_PASSWORD,
+        user: env.nodemailer.email,
+        pass: env.nodemailer.password,
     }
 })
 
 export async function sendEmail(to, subject, html) {
 
     await transporter.sendMail({
-        from: `"Not Gonna Lie App" <${process.env.NODE_MAILER_EMAIL}>`,
+        from: `"Not Gonna Lie App" <${env.nodemailer.email}>`,
         to: to,
         subject: subject,
         html: html

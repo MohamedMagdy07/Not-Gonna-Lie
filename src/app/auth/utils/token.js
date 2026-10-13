@@ -1,9 +1,9 @@
-import 'dotenv/config';
 import jwt from "jsonwebtoken"
+import {env} from "../../../lib/config/env.js";
 
 export async function generateToken(data, expiresIn) {
     const token = jwt.sign({
         ...data,
-    }, process.env.JWT_SECRET_KEY, {expiresIn});
+    }, env.jwt.secret, {expiresIn});
     return token;
 }
