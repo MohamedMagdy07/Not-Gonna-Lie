@@ -34,7 +34,7 @@ export const env = {
     },
     redis: {
         host: parsed.REDIS_HOST,
-        port: parsed.REDIS_PORT,
+        port:Number(parsed.REDIS_PORT),
         password: parsed.REDIS_PASSWORD,
     },
     nodemailer: {

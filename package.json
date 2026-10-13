@@ -5,13 +5,14 @@
   "license": "ISC",
   "author": "Mohamed Magdy",
   "type": "module",
-  "main": "src/app.js",
+  "main": "src/server.js",
   "scripts": {
     "dev": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
     "dotenv": "^18.0.0",
     "express": "^5.2.1",
     "google-auth-library": "^11.2.0",

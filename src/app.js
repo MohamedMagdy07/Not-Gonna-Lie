@@ -1,15 +1,18 @@
 import express from 'express';
 import './lib/db/mongoose.js'
 import {authRouter} from "./app/auth/auth.route.js";
-import {globalErrorHandler} from "./pkg/error/error.js";
 import logger from "./pkg/logger/logger.js";
 import {env} from "./lib/config/env.js";
+import cors from "cors"
+import {globalErrorHandler} from "./pkg/error/globalErrorHandler.js";
 
-const app = express();
-app.use(express.json());
-app.use("/auth", authRouter);
-app.use(globalErrorHandler);
+export function createApp(){
+    const app = express();
+    app.use(cors({origin: 'http://localhost:4200'}));
+    app.use(express.json());
+    app.use("/auth", authRouter);
+    app.use(globalErrorHandler);
 
-app.listen(env.app_port, () => {
-    logger.info(`Server started on port ${env.app_port}`);
-})
+
+    return app;
+}
