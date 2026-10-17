@@ -3,8 +3,10 @@ import {createApp} from "./app.js";
 import mongoose from "mongoose";
 import {env} from "./lib/config/env.js";
 import logger from "./pkg/logger/logger.js";
+import express from "express";
 
-const server = http.createServer(createApp);
+const app = createApp();
+const server = http.createServer(app);
 server.listen(env.app_port, () => {
     logger.info(`Server started on port ${env.app_port}`);
 });
@@ -17,6 +19,6 @@ async function shutdown() {
     });
 }
 
-server.on('SIGINT', shutdown);
+process.on('SIGINT', shutdown);
 
-server.on('SIGTERM', shutdown);
+process.on('SIGTERM', shutdown);
