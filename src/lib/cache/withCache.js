@@ -1,6 +1,6 @@
 import {cacheProvider} from "./init.js";
 
-export function withCache(ttl=3600) {
+export function withCache(ttl=600) {
     return async (req, res, next) => {
 
         let key = `${req.method}${req.originalUrl}`;
@@ -12,8 +12,10 @@ export function withCache(ttl=3600) {
         }
         const ogResponseJson = res.json.bind(res);
         res.json = (async (body) => {
-            await cacheProvider.set(key, JSON.stringify(body),ttl);
-            res.setHeader("X-Cache", "MISS");
+            if(res.statusCode >= 200 && res.statusCode < 300 ) {
+                await cacheProvider.set(key, JSON.stringify(body),ttl);
+                res.setHeader("X-Cache", "MISS");
+            }
             return ogResponseJson(body);
         })
 

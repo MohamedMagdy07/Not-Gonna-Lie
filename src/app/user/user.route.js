@@ -4,4 +4,4 @@ import {getALlUsers} from "./controller/user.controller.js";
 
 export const userRouter = Router()
 
-userRouter.get('/getAllUsers', withCache(), getALlUsers);
+userRouter.get('/getAllUsers', withCache(300), getALlUsers);

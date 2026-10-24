@@ -5,6 +5,7 @@ export class RedisCacheProvider {
 
     constructor(config) {
         this.redis = new Redis({
+            url: config.url,
             host: config.host,
             port: config.port,
             password: config.password,
