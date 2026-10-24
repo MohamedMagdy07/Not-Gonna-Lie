@@ -9,6 +9,8 @@ import {verifyOtp} from "../utils/otp.js";
 import * as userRepo from "../../user/repository/user.repository.js";
 import logger from "../../../pkg/logger/logger.js";
 import {verifyGoogleToken} from "../../../lib/utils/google.auth.js";
+import {mailjetProvider} from "../../../lib/email/init.js";
+import {html} from "../../../lib/email/html.js";
 
 
 export async function register(userData) {
@@ -21,7 +23,7 @@ export async function register(userData) {
         code: otp,
         email: userData.email,
     })
-    //await sendEmail(userData.email, "Verify your email",`<h1>Your verification code is ${otp}<h1>`); // since the function is working, I will comment it and use Log to check the output
+    //await mailjetProvider.sendEmail(userData.email, "Verify your email", `Your verification code is ${otp}`); // since the function is working, I will comment it and use Log to check the output
     logger.info(otp); // This will be enough for testing
     return newUser;
 }
@@ -59,6 +61,7 @@ export async function sendOtp(email) {
         code: otp,
         email,
     })
+    //await mailjetProvider.sendEmail(userExist.email, "Verify your email", html(`Your verification code is ${otp}`)); // since the function is working, I will comment it and use Log to check the output
     logger.info(otp); // This will be enough for testing
 }
 
