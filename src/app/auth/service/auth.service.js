@@ -9,8 +9,6 @@ import {verifyOtp} from "../utils/otp.js";
 import * as userRepo from "../../user/repository/user.repository.js";
 import logger from "../../../pkg/logger/logger.js";
 import {verifyGoogleToken} from "../../../lib/utils/google.auth.js";
-import {mailjetProvider} from "../../../lib/email/init.js";
-import {html} from "../../../lib/email/html.js";
 
 
 export async function register(userData) {
@@ -50,7 +48,10 @@ export async function login(email, password) {
     const match = await comparePassword(password, user.password)
     console.log("match", match)
     if (!match) throw wrongPassword;
-    return generateToken({email, password}, "12H");
+    return generateToken({
+        id: user.id,
+        email, password,
+    }, "12H");
 }
 
 

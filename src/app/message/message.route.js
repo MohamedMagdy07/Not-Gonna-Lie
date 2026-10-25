@@ -8,3 +8,6 @@ messageRouter.post("/", messageContorller.sendMessage)
 
 messageRouter.post("/public",guard, messageContorller.sendMessage)
 
+messageRouter.get("/myMessages",guard, messageContorller.getAllMessages)
+
+

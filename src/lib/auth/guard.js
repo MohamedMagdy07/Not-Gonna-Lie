@@ -6,7 +6,9 @@ export function guard(req, res, next) {
     try {
         const token = req.cookies.access_token;
         if (!token) {throw new AppError("No token provided",403);}
-        req.user = jwt.verify(token, env.jwt.secret);
+
+        const payload = jwt.verify(token, env.jwt.secret);
+        req.user = payload;
         next();
     }catch(err) {
         next(err);
