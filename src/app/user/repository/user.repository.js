@@ -7,3 +7,7 @@ export async function updateUserByEmail(email, data) {
 export async function getAllUsers() {
     return await User.find();
 }
+
+export async function findUserById(id) {
+    return await User.findOne({_id:id,isDeleted : false}, {password:0});
+}

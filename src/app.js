@@ -5,6 +5,7 @@ import cors from "cors"
 import {globalErrorHandler} from "./lib/error/global.error.handler.js";
 import {userRouter} from "./app/user/user.route.js";
 import {correlationId} from "./lib/correlation/correlationId.js";
+import {messageRouter} from "./app/message/message.route.js";
 
 export function createApp(){
     const app = express();
@@ -13,6 +14,7 @@ export function createApp(){
     app.use(correlationId)
     app.use("/auth", authRouter);
     app.use("/user", userRouter);
+    app.use("/message", messageRouter);
     app.use(globalErrorHandler);
 
 
