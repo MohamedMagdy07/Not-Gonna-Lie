@@ -48,6 +48,7 @@ export async function login(email, password) {
     if (!user) throw userNotExists;
     if (!user.isVerified) throw userNotVerified
     const match = await comparePassword(password, user.password)
+    console.log("match", match)
     if (!match) throw wrongPassword;
     return generateToken({email, password}, "12H");
 }

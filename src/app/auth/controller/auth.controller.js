@@ -40,7 +40,8 @@ export async function login(req, res, next) {
         const data = validationBody(loginDTO, req.body);
         const {password, email} = data
         const token = await authService.login(email, password)
-        res.cookie('token', token, {
+        logger.info(token);
+        res.cookie('access_token', token, {
             httpOnly: true,
         })
         res.status(200).json({
@@ -84,7 +85,7 @@ export async function resetPassword(req, res, next) {
 export async function loginWithGoogle(req, res, next) {
     try {
         const token = await authService.loginWithGoogle(req.body.idToken);
-        res.cookie('token', token, {
+        res.cookie('access_token', token, {
             httpOnly: true,
             maxAge: convertToMs(1,"hours"),
         })
