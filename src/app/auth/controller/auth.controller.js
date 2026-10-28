@@ -1,6 +1,13 @@
 import * as authService from "../service/auth.service.js"
 import {validationBody} from "../../../lib/validation/validation.js";
-import {loginDTO, registerDTO, resetPasswordDTO, sendOTPDTO, verifyAccountDTO} from "../dto/auth.dto.js";
+import {
+    enable2StepVerificationDTO,
+    loginDTO,
+    registerDTO,
+    resetPasswordDTO,
+    sendOTPDTO,
+    verifyAccountDTO
+} from "../dto/auth.dto.js";
 import logger from "../../../pkg/logger/logger.js";
 import {convertToMs} from "../../../pkg/utils/TimeConversion.js";
 
@@ -20,15 +27,29 @@ export async function register(req, res, next) {
 }
 
 
-export async function verify(req, res, next) {
+export async function verifyAccount(req, res, next) {
     try {
         const data = validationBody(verifyAccountDTO, req.body);
         const {code, email} = data
-        const verifiedUser = await authService.verify(code, email)
+        const verifiedUser = await authService.verifyAccount(code, email)
         res.status(201).json({
             message: 'User verified successfully',
             success: true,
             user: verifiedUser,
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
+export async function enable2StepVerification(req, res, next) {
+    try {
+        const data = validationBody(enable2StepVerificationDTO, req.body);
+        const {code, email} = data
+        const user = await authService.enable2StepVerification(code, email)
+        res.status(201).json({
+            message: 'User enabled 2 step verification successfully',
+            success: true,
         })
     } catch (err) {
         next(err)

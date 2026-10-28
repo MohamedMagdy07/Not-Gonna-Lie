@@ -14,3 +14,9 @@ export async function verifyUser(email) {
         isVerified: true
     },)
 }
+
+export async function enable2StepVerification(email) {
+    return await User.updateOne({email: email}, {
+        twoStepVerification: true
+    },)
+}

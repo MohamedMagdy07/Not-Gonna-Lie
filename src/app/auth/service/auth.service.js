@@ -27,7 +27,7 @@ export async function register(userData) {
 }
 
 
-export async function verify(code, email) {
+export async function verifyAccount(code, email) {
     const userExist = await authRepo.checkEmailExists(email);
     if (!userExist) throw userNotExists;
     if (userExist.isVerified) throw userVerified
@@ -38,6 +38,19 @@ export async function verify(code, email) {
     const verifiedUser = await authRepo.verifyUser(email);
     await otpRepo.deleteOtp(email)
     return verifiedUser;
+}
+
+export async function enable2StepVerification(code, email) {
+    const userExist = await authRepo.checkEmailExists(email);
+    if (!userExist) throw userNotExists;
+    if (userExist.isVerified) throw userVerified
+    // const otp = await otpRepo.getOtpByEmail(email);
+    // if (!otp) throw noOtp;
+    // if (code !== otp.code) throw invalidOtp
+    await verifyOtp(code, email);
+    const user = await authRepo.enable2StepVerification(email);
+    await otpRepo.deleteOtp(email)
+    return user;
 }
 
 

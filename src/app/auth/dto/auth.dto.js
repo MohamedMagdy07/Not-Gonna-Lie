@@ -28,3 +28,8 @@ export const resetPasswordDTO = z.object({
 export const sendOTPDTO = z.object({
     email: z.email().lowercase().trim().includes("@"),
 }).strict();
+
+export const enable2StepVerificationDTO = z.object({
+    email: z.email().lowercase().trim().includes("@"),
+    code: z.string().trim().length(6),
+}).strict();
